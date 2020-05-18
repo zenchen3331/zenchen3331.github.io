@@ -1,0 +1,5 @@
+Host github.com
+    User git
+    StrictHostKeyChecking no
+    IdentityFile ~/.ssh/for_travis_ci/id_rsa
+    IdentitiesOnly yes
