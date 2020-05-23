@@ -32,7 +32,7 @@ install:
 - npm install
 
 script:
-- npm run deploytravis
+- npm run deploy
 
 deploy:
   provider: pages
