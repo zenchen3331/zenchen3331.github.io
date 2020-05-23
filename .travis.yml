@@ -18,8 +18,8 @@ before_install:
 # - openssl aes-256-cbc -K $encrypted_f217180e22ee_key -iv $encrypted_f217180e22ee_iv
 #   -in .travis/id_rsa.enc -out id_rsa -d
 
-# 这里的 id_rsa.enc 使用命令 travis encrypt-file id_rsa 来生成，然后把出现的下面一行复制到这里，注意路径。 .travis/id_rsa.enc 就是相对路径
-- openssl aes-256-cbc -K $encrypted_f217180e22ee_key -iv $encrypted_f217180e22ee_iv -in .travis/id_rsa.enc -out id_rsa -d
+# 这里的 github_deploy_key.enc 使用命令 travis encrypt-file github_deploy_key 来生成，然后把出现的下面一行复制到这里，注意路径。 .travis/github_deploy_key.enc 就是相对路径
+- openssl aes-256-cbc -K $encrypted_f217180e22ee_key -iv $encrypted_f217180e22ee_iv -in .travis/github_deploy_key.enc -out ~/.ssh/github_deploy_key -d
 - chmod 600 ~/.ssh/github_deploy_key
 - eval $(ssh-agent)
 - ssh-add ~/.ssh/github_deploy_key
