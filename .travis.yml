@@ -1,34 +1,85 @@
 language: node_js
+sudo: required
+node_js:
+  - 7.9.0
 
-node_js: stable  # 要安装的node版本为当前的稳定版
-
+# 指定缓存模块，可加快编译速度
 cache:
   directories:
-  - node_modules # 要缓存的文件夹
+    - node_modules
 
+# 指定博客源码分支，这里填入博客源码的分支名
+branches:
+  only:
+    - hexo
+
+before_install:
+  - export TZ='Asia/Shanghai' # 更改时区
+  - npm install -g hexo-cli
+
+# S: Build Lifecycle
 install:
   - npm install
+  - npm install hexo-deployer-git --save
+
+before_script:
+ # - npm install -g gulp
 
 script:
   - hexo clean
-  - hexo g
+  - hexo generate
 
-after_script:   # 最后执行的命令
-  - cd ./public
-  - git init
+# 设置 git push 别名，邮箱。替换真实 token 到 _config.yml 文件中，然后 deploy 部署
+after_script:
   - git config user.name "zenchen3331"
   - git config user.email "zenchen3331@gmail.com"
-  - git add .
-  - git commit -m "Travis CI Auto Builder"
-  - git push --force --quiet "https://${GITHUB_REPO_TOKEN}@${GH_REF}" master:master
+  - git clone https://github.com/zenchen3331/zenchen3331.github.io.git .deploy_git # 解决 commit 清空问题
+  - cd .deploy_git
+  - git checkout master
+  - cd ../
+  # 替换同目录下的_config.yml文件中gh_token字符串为travis后台刚才配置的变量，注意此处sed命令用了双引号。单引号无效！
+  - sed -i "s/gh_token/${GH_TOKEN}/g" ./_config.yml # 这里的 GH_TOKEN 名字要和网页中定义的别名一致
+  - cat ./_config.yml
+  - hexo deploy
+# E: Build LifeCycle
+## 如果以后要集成搜索可以参考 https://github.com/Felon03/Felon03.github.io/blob/source/.travis.yml
 
-branches:
-  only:
-    - hexo # 触发持续集成的分支
 
-env:
- global:
-   - GH_REF: github.com/zenchen3331/zenchen3331.github.io.git # 就是你github上存放静态博客最终文件的仓库地址末尾加上.git
+
+# ======================这种会清空commit，因为没有复制以前的提交。==========================
+# language: node_js
+#
+# node_js: stable  # 要安装的node版本为当前的稳定版
+#
+# cache:
+#   apt: true
+#   directories:
+#   - node_modules # 要缓存的文件夹
+#
+# install:
+#   - npm install hexo-cli -g
+#   - npm install # 安装hexo及插件
+#
+# script:
+#   - hexo clean # 清除
+#   - hexo g # 生成
+#
+# after_script:   # 最后执行的命令
+#   - cd ./public
+#   - git init
+#   - git config user.name "zenchen3331"
+#   - git config user.email "zenchen3331@gmail.com"
+#   - git add .
+#   - git commit -m "Travis CI Auto Builder"
+#   - git push --force --quiet "https://${GITHUB_REPO_TOKEN}@${GH_REF}" master:master
+#
+# branches:
+#   only:
+#     - hexo # 触发持续集成的分支 # 只监测hexo分支
+#
+# env:
+#  global:
+#    - GH_REF: github.com/zenchen3331/zenchen3331.github.io.git
 # - GH_REF: github.com/yourname/yourname.github.io.git #设置GH_REF，注意更改yourname
 
 
