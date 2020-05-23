@@ -6,6 +6,7 @@
     "build": "hexo generate",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
+    "deploytravis": "hexo clean && hexo g -d",
     "server": "hexo server"
   },
   "hexo": {
