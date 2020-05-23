@@ -1,48 +1,84 @@
 language: node_js
 
-sudo: false
+node_js: stable  # 要安装的node版本为当前的稳定版
 
-node_js:
-  - '8'
+cache:
+  directories:
+  - node_modules # 要缓存的文件夹
+
+install:
+  - npm install
+
+script:
+  - hexo clean
+  - hexo g
+
+after_script:   # 最后执行的命令
+  - cd ./public
+  - git init
+  - git config user.name "zenchen3331"
+  - git config user.email "zenchen3331@gmail.com"
+  - git add .
+  - git commit -m "代码是自动部署的哈"
+  - git push --force --quiet "https://${GITHUB_REPO_TOKEN}@${GH_REF}" hexo:master
 
 branches:
   only:
-  - hexo
+    - hexo # 触发持续集成的分支
 
-# cache:
-#   directories:
-#     - node_modules
+env:
+ global:
+   - GH_REF: github.com/zenchen3331/zenchen3331.github.io.git # 就是你github上存放静态博客最终文件的仓库地址末尾加上.git
+# - GH_REF: github.com/yourname/yourname.github.io.git #设置GH_REF，注意更改yourname
 
-before_install:
-# 这里是以前的，失效了，重新做了一个加密文件。
-# - openssl aes-256-cbc -K $encrypted_f217180e22ee_key -iv $encrypted_f217180e22ee_iv
-#   -in .travis/id_rsa.enc -out id_rsa -d
 
-# 这里的 github_deploy_key.enc 使用命令 travis encrypt-file github_deploy_key 来生成，然后把出现的下面一行复制到这里，注意路径。 .travis/github_deploy_key.enc 就是相对路径
-- openssl aes-256-cbc -K $encrypted_f217180e22ee_key -iv $encrypted_f217180e22ee_iv -in .travis/github_deploy_key.enc -out ~/.ssh/github_deploy_key -d
-- chmod 600 ~/.ssh/github_deploy_key
-- eval $(ssh-agent)
-- ssh-add ~/.ssh/github_deploy_key
-- cp .travis/ssh_config ~/.ssh/config
-- git config --global user.name 'zenchen3331'
-- git config --global user.email 'zenchen3331@gmail.com'
+# ================历史配置，未成功，执拗的希望使用加密私钥的方式。===============
+# language: node_js
+#
+# sudo: false
+#
+# node_js:
+#   - '8'
+#
+# branches:
+#   only:
+#   - hexo
+#
+# # cache:
+# #   directories:
+# #     - node_modules
+#
+# before_install:
+# # 这里是以前的，失效了，重新做了一个加密文件。
+# # - openssl aes-256-cbc -K $encrypted_f217180e22ee_key -iv $encrypted_f217180e22ee_iv
+# #   -in .travis/id_rsa.enc -out id_rsa -d
+#
+# # 这里的 github_deploy_key.enc 使用命令 travis encrypt-file github_deploy_key 来生成，然后把出现的下面一行复制到这里，注意路径。 .travis/github_deploy_key.enc 就是相对路径
+# - openssl aes-256-cbc -K $encrypted_f217180e22ee_key -iv $encrypted_f217180e22ee_iv -in .travis/github_deploy_key.enc -out ~/.ssh/github_deploy_key -d
+# - chmod 600 ~/.ssh/github_deploy_key
+# - eval $(ssh-agent)
+# - ssh-add ~/.ssh/github_deploy_key
+# - cp .travis/ssh_config ~/.ssh/config
+# - git config --global user.name 'zenchen3331'
+# - git config --global user.email 'zenchen3331@gmail.com'
+#
+# install:
+# - npm install hexo-cli -g
+# - npm install
+#
+# script:
+# - npm run deploy
+# deploy:
+#   provider: pages
+#   skip-cleanup: true
+#   # github-token: $GH_TOKEN
+#   keep-history: true
+#   on:
+#     branch: master
+#   local-dir: public
 
-install:
-- npm install hexo-cli -g
-- npm install
 
-script:
-- npm run deploy
-
-deploy:
-  provider: pages
-  skip-cleanup: true
-  # github-token: $GH_TOKEN
-  keep-history: true
-  on:
-    branch: master
-  local-dir: public
-
+# ==================参考代码===================
 # language: node_js
 # node_js: stable
 #
