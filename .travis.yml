@@ -19,7 +19,7 @@ after_script:   # 最后执行的命令
   - git config user.name "zenchen3331"
   - git config user.email "zenchen3331@gmail.com"
   - git add .
-  - git commit -m "代码是自动部署的哈"
+  - git commit -m "Automatic deployment"
   - git push --force --quiet "https://${GITHUB_REPO_TOKEN}@${GH_REF}" hexo:master
 
 branches:
