@@ -99,6 +99,9 @@ theme: landscape
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
+  # 如果你用的 GitHub token ，那么用 https 链接可以。
+  # 如果你用的是 加密的密钥，那么要用 git@github.com:zenchen3331/zenchen3331.github.io.git
   # repo: https://github.com/zenchen3331/zenchen3331.github.io.git
+  # 这种路径，是部署的时候，替换 gh_token 字符的专用链接。
   repo: https://gh_token@github.com/zenchen3331/zenchen3331.github.io.git
   branch: master
