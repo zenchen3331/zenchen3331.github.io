@@ -35,5 +35,3 @@ Test and Deploy with Confidence
 
 **Automate your workflow from idea to production**
 
-
-
