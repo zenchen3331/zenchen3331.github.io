@@ -1,6 +1,6 @@
 # ---------------
-# Todo: mode: light | dark | auto
-mode: light # now only light
+# 可选 light | dark | auto | time
+mode: dark # now only light
 
 # Theme color for customize
 # Notice: color value must in double quotes: "#000000"
@@ -305,7 +305,13 @@ vendors:
 # UI
 banner:
   enable: true
-  title: 云游君的小站
+  title:
+    - 我要买耳机
+    - 的小站
+    - Yun
+    - You
+    - Jun
+    - Blog
   src: /js/ui/banner.js
   cloud: true
   go_down:
