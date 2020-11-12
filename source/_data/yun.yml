@@ -305,13 +305,7 @@ vendors:
 # UI
 banner:
   enable: true
-  title:
-    - 我要买耳机
-    - 的小站
-    - Yun
-    - You
-    - Jun
-    - Blog
+  title: 我要买耳机的博客
   src: /js/ui/banner.js
   cloud: true
   go_down:
@@ -365,7 +359,8 @@ scrollreveal: true
 
 bg_image:
   enable: true
-  url: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/bg/stars-timing-0-blur-30px.jpg # recomend image related to your mode
+  url: http://img.netbian.com/file/2020/0921/7ea4f7e8fb21e3003376d847789beb79.jpg # recomend image related to your mode
+  dark: https://raw.githubusercontent.com/zenchen3331/picbed/master/IMG_3957.JPG
   # blur: 30px
   opacity: 0.8
 
